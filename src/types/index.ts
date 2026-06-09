@@ -48,3 +48,21 @@ export interface PricingPlan {
   cta: string;
   popular?: boolean;
 }
+
+export interface Founder {
+  id: string;
+  name: string;
+  role: string;
+  tagline: string;
+  bio: string;
+  expertise: string[];
+  credentials: string[];
+  location: string;
+  accent: "signal" | "plasma" | "cyan";
+  avatar: string;
+  links: {
+    github: string;
+    linkedin: string;
+    twitter: string;
+  };
+}

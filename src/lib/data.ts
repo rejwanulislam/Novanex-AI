@@ -1,39 +1,39 @@
 import { Shield, Server, Lock, Eye, Box, ShieldOff, FileText } from "lucide-react";
-import type { Service, Project, TechItem, SecurityCard, Credential, Feature, PricingPlan } from "@/types";
+import type { Service, Project, TechItem, SecurityCard, Credential, Feature, PricingPlan, Founder } from "@/types";
 
 export const features: Feature[] = [
   {
     icon: Shield,
-    title: "Enterprise-Grade Security",
-    description: "SOC 2 Type II compliant with end-to-end encryption",
+    title: "Enterprise Security",
+    description: "SOC 2 compliant with end-to-end data encryption",
   },
   {
     icon: Server,
-    title: "Isolated Containers",
-    description: "Your data runs in dedicated Docker containers",
+    title: "Isolated Infrastructure",
+    description: "Your systems run in secure, dedicated containers",
   },
   {
     icon: Lock,
     title: "Zero Data Training",
-    description: "We never train models on your proprietary data",
+    description: "We guarantee your proprietary data is never used for training",
   },
   {
     icon: Eye,
-    title: "Full Transparency",
-    description: "Complete audit logs and data lineage tracking",
+    title: "Total Transparency",
+    description: "Comprehensive audit logs and verifiable data lineage",
   },
 ];
 
 export const tickerItems: string[] = [
-  "SOP-to-Agent Systems",
-  "Predictive BI",
-  "Workflow Automation",
-  "Geospatial AI",
-  "Multi-Agent Orchestration",
+  "Novanex AI Systems",
+  "SOP-to-Agent Automation",
+  "Predictive Decisions",
+  "Spatial Intelligence",
+  "Multi-Agent Workflows",
   "Zero Data Training Policy",
-  "Active RAG Systems",
-  "Computer Vision",
-  "LangGraph Pipelines",
+  "Advanced RAG Pipelines",
+  "Computer Vision Systems",
+  "Next.js SaaS Applications",
   "FastAPI Backends",
 ];
 
@@ -60,101 +60,53 @@ export const techStack: readonly TechItem[] = [
 
 export const services: readonly Service[] = [
   {
-    id: "sop-to-agent",
-    number: "01",
-    title: "SOP-to-Agent Systems",
-    description:
-      "We convert static SOPs and internal documents into resilient AI operators that can execute workflows, answer with context, and trigger downstream actions.",
-    tags: ["RAG", "LangGraph", "FastAPI"],
-  },
-  {
     id: "predictive-bi",
-    number: "02",
+    number: "01",
     title: "Predictive Business Intelligence",
     description:
-      "From raw business data to predictive signals, we design decision engines that surface risk, opportunity, and next-best action in real time.",
+      "Turn raw business datasets into predictive signals. We build intelligent forecasting models and business decision engines that identify hidden risks and opportunities in real-time.",
     tags: ["ML", "Python", "PostgreSQL"],
   },
   {
     id: "workflow-automation",
-    number: "03",
+    number: "02",
     title: "Intelligent Workflow Automation",
     description:
-      "We orchestrate autonomous process chains that integrate your existing systems and remove repetitive bottlenecks from core operations.",
+      "Automate complex, cross-functional processes. We build self-healing multi-agent chains that connect your tools and orchestrate work autonomously without human intervention.",
     tags: ["n8n", "Docker", "Gemini API"],
   },
   {
     id: "geospatial-ai",
-    number: "04",
+    number: "03",
     title: "Geospatial AI Pipelines",
     description:
-      "We engineer geospatial intelligence stacks that transform satellite and spatial data into operational forecasts, anomaly flags, and planning insight.",
+      "Transform spatial data into action. We engineer robust GIS pipelines that process satellite imagery (SAR, Landsat) to monitor climate impact, predict flooding, and map urban environments.",
     tags: ["Sentinel-1", "GEE", "NetworkX"],
   },
   {
-    id: "computer-vision",
-    number: "05",
-    title: "Computer Vision Agents",
-    description:
-      "Our visual agents detect, track, and interpret objects at speed to power quality assurance, monitoring, and event-driven automation.",
-    tags: ["YOLOv8", "ByteTrack", "Groq"],
-  },
-  {
     id: "chatbot-systems",
-    number: "06",
+    number: "04",
     title: "Intelligent Chatbot Systems",
     description:
-      "We deploy production chatbot systems that combine fast automation with business context for support, lead qualification, and conversion flows.",
+      "Next-generation customer experience. We build highly conversational, RAG-powered chatbot systems that integrate securely with internal knowledge bases to resolve queries instantly.",
     tags: ["n8n", "Gemini", "Facebook API"],
   },
   {
     id: "web-development",
-    number: "07",
+    number: "05",
     title: "Custom Web Application Development",
     description:
-      "We build scalable, production-grade web applications with modern stacks — from SaaS dashboards to internal tools — optimized for performance and long-term maintainability.",
+      "Scalable, high-performance web products. We design and build responsive Next.js apps, admin dashboards, and custom SaaS platforms optimized for performance and long-term maintainability.",
     tags: ["Next.js", "React", "FastAPI"],
   },
   {
-    id: "landing-pages",
-    number: "08",
-    title: "High-Conversion Landing Pages",
-    description:
-      "We design and deploy performance-focused landing pages with AI-powered A/B testing hooks, analytics integration, and conversion-optimized UI that turns visitors into leads.",
-    tags: ["Next.js", "Tailwind", "Analytics"],
-  },
-  {
-    id: "ecommerce",
-    number: "09",
-    title: "AI-Enhanced E-Commerce Platforms",
-    description:
-      "We develop intelligent e-commerce systems with smart product recommendation engines, automated inventory alerts, and AI-driven customer support built directly into the storefront.",
-    tags: ["Next.js", "Stripe", "Gemini API"],
-  },
-  {
     id: "saas-platforms",
-    number: "10",
+    number: "06",
     title: "SaaS Platform Engineering",
     description:
-      "From authentication to billing to role-based dashboards, we engineer complete SaaS platforms with multi-tenancy, usage analytics, and AI feature layers ready to scale from day one.",
+      "Complete SaaS engineering. From robust multi-tenant architectures and Stripe payments to AI integration layers and security, we deliver ready-to-scale SaaS platforms.",
     tags: ["Next.js", "PostgreSQL", "Docker"],
-  },
-  {
-    id: "portfolio-sites",
-    number: "11",
-    title: "Portfolio & Corporate Websites",
-    description:
-      "We craft visually distinctive, SEO-optimized corporate and portfolio websites that load fast, rank well, and communicate brand authority — built to impress and built to last.",
-    tags: ["Next.js", "Tailwind", "Vercel"],
-  },
-  {
-    id: "web-scraping",
-    number: "12",
-    title: "Intelligent Web Scraping & Data Pipelines",
-    description:
-      "We engineer robust scraping systems with anti-detection handling, structured data extraction, and automated pipelines that feed directly into your dashboards or AI models.",
-    tags: ["Python", "FastAPI", "PostgreSQL"],
-  },
+  }
 ] as const;
 
 export const securityCards: readonly SecurityCard[] = [
@@ -221,7 +173,7 @@ export const pricingPlans: readonly PricingPlan[] = [
   {
     id: "starter",
     name: "Starter",
-    price: "$1,500",
+    price: "$200",
     period: "/ project",
     description: "Perfect for small businesses ready to automate their first workflow.",
     features: [
@@ -236,7 +188,7 @@ export const pricingPlans: readonly PricingPlan[] = [
   {
     id: "growth",
     name: "Growth",
-    price: "$4,500",
+    price: "$300",
     period: "/ project",
     description: "For scaling teams that need end-to-end AI pipeline deployment.",
     features: [
@@ -268,9 +220,75 @@ export const pricingPlans: readonly PricingPlan[] = [
   },
 ] as const;
 
+export const founders: readonly Founder[] = [
+  {
+    id: "founder-1",
+    name: "Md. Rifatul Islam",
+    role: "Founder & CEO",
+    tagline: "Building AI that thinks like an operator, not a researcher.",
+    bio: "Rifatul leads Novanex AI's vision and technical strategy. With a background spanning urban planning, geospatial intelligence, and production ML systems, he bridges cutting-edge AI research and real-world operational deployment. His work on the OmniGuard-AI flood resilience pipeline and Rajshahi 2035 climate analysis earned national recognition at the GEOPLAN 1.0 Mapathon.",
+    expertise: ["LangGraph Orchestration", "Geospatial AI", "RAG Architecture", "Computer Vision", "FastAPI Systems"],
+    credentials: [
+      "APA Member #443529",
+      "Int'l Speaker — Pabna University of Science and Technology",
+      "CROPC-IMD Government Intern",
+      "GEOPLAN 1st Runner-up (National)",
+      "UNITAR Climate Programs",
+      "Helsinki Python MOOC",
+    ],
+    location: "Pabna, Bangladesh",
+    accent: "signal",
+    avatar: "RI",
+    links: { github: "#", linkedin: "#", twitter: "#" },
+  },
+  {
+    id: "founder-2",
+    name: "Rejwanul Islam",
+    role: "Co-Founder & CTO",
+    tagline: "Turning messy operations into elegant autonomous systems.",
+    bio: "Rejwanul architects Novanex AI's product and engineering stack. He specializes in full-stack AI system design — from Next.js frontends and FastAPI backends to LangGraph orchestration and Docker deployments. He builds the infrastructure that turns AI prototypes into reliable, scalable production systems.",
+    expertise: ["Product Strategy", "Next.js", "React", "FastAPI", "LangGraph", "Docker", "PostgreSQL", "n8n"],
+    credentials: [
+      "Software Engineer",
+      "Scalable System Design",
+      "API Integration Expert",
+      "AI System Designer",
+    ],
+    location: "Dhaka, Bangladesh",
+    accent: "plasma",
+    avatar: "RI",
+    links: { github: "#", linkedin: "#", twitter: "#" },
+  },
+] as const;
+
+export const teamStats = [
+  { value: "2", label: "Founding Engineers" },
+  { value: "6+", label: "Years Combined Experience" },
+  { value: "20+", label: "Systems Shipped" },
+  { value: "100%", label: "Production Focus" },
+] as const;
+
+export const teamValues = [
+  {
+    title: "Ship First",
+    desc: "Every system is scoped to deploy in weeks — not months. We iterate fast and get AI into production where it creates real value.",
+    accent: "signal" as const,
+  },
+  {
+    title: "Own the Stack",
+    desc: "We don't hand off to black boxes. We control every layer — from RAG indexes to Docker containers — so you always know what's running.",
+    accent: "plasma" as const,
+  },
+  {
+    title: "Zero Bloat",
+    desc: "No unnecessary models, no vanity metrics. Every component earns its place by solving a real operational problem for a real user.",
+    accent: "cyan" as const,
+  },
+] as const;
+
 export const stats = [
-  { value: "15+", label: "AI Systems Deployed" },
-  { value: "90%", label: "Automation Resolution Rate" },
+  { value: "20+", label: "AI Systems Deployed" },
+  { value: "92%", label: "Automation Resolution Rate" },
   { value: "6", label: "Core AI Disciplines" },
-  { value: "0", label: "Data Sold to Third Parties" },
+  { value: "0", label: "Data Shared with Third Parties" },
 ] as const;

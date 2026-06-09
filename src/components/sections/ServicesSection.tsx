@@ -1,106 +1,103 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Brain, Globe, Bot, Code, Layers, Sparkles } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { services } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import SectionHeader from "@/components/ui/SectionHeader";
+
+const icons = [Brain, Bot, Globe, Sparkles, Code, Layers];
 
 export default function ServicesSection() {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [active, setActive] = useState(services[0].id);
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
+  const activeService = services.find((s) => s.id === active) ?? services[0];
 
   return (
-    <section id="services" className="py-28 relative" ref={ref}>
-      {/* Bg glow */}
-      <div
-        className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 100% 50%, rgba(123,94,255,0.4) 0%, transparent 60%)",
-        }}
-      />
+    <section id="services" className="section-pad relative" ref={ref}>
+      <div className="section-container">
+        <SectionHeader
+          label="What We Build"
+          title={
+            <>
+              AI services that{" "}
+              <span className="gradient-text-accent">ship to production</span>
+            </>
+          }
+          description="Six core disciplines. Every system scoped, built, and deployed with full transparency."
+        />
 
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div
-          className={cn(
-            "mb-16 transition-all duration-700",
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-6 h-px bg-signal" />
-            <span className="font-mono text-xs text-signal uppercase tracking-widest">
-              What We Build
-            </span>
-          </div>
-          <h2 className="font-display font-800 text-4xl md:text-5xl text-text-primary">
-            AI Services That
-            <br />
-            <span className="gradient-text-signal">Actually Ship</span>
-          </h2>
-        </div>
-
-        {/* Service grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 rounded-2xl overflow-hidden border border-white/5">
-          {services.map((service, i) => (
-            <div
-              key={service.id}
-              className={cn(
-                "relative bg-ink p-8 group cursor-default transition-all duration-500",
-                hovered === service.id && "bg-ink-muted",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              )}
-              style={{ transitionDelay: `${i * 80}ms` }}
-              onMouseEnter={() => setHovered(service.id)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              {/* Number */}
-              <div className="font-mono text-xs text-text-muted mb-6 tracking-widest">
-                {service.number}
-              </div>
-
-              {/* Hover accent */}
-              <div
-                className={cn(
-                  "absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-signal to-transparent transition-all duration-500",
-                  hovered === service.id ? "opacity-100" : "opacity-0"
-                )}
-              />
-
-              {/* Title */}
-              <h3 className="font-display font-700 text-lg text-text-primary mb-3 group-hover:text-signal transition-colors duration-300 leading-snug">
-                {service.title}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <motion.div
+            className="lg:col-span-5 stack-card p-7 md:p-8 flex flex-col justify-between min-h-[380px]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <div>
+              <span className="text-xs font-medium text-accent">{activeService.number}</span>
+              <h3 className="text-xl md:text-2xl font-bold text-text-primary mt-2 mb-3 leading-tight">
+                {activeService.title}
               </h3>
-
-              {/* Description */}
-              <p className="text-text-secondary text-sm leading-relaxed mb-6">
-                {service.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {service.tags.map((tag) => (
-                  <span key={tag} className="tag">
-                    {tag}
-                  </span>
+              <p className="text-text-secondary text-sm leading-relaxed">{activeService.description}</p>
+            </div>
+            <div className="mt-6">
+              <div className="flex flex-wrap gap-2 mb-5">
+                {activeService.tags.map((tag) => (
+                  <span key={tag} className="tag">{tag}</span>
                 ))}
               </div>
-
-              {/* Arrow */}
-              <div
-                className={cn(
-                  "absolute top-6 right-6 w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center transition-all duration-300",
-                  hovered === service.id
-                    ? "bg-signal/10 border-signal/30 opacity-100"
-                    : "opacity-0"
-                )}
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2.5 transition-all group"
               >
-                <ArrowUpRight size={14} className="text-signal" />
-              </div>
+                Discuss this service
+                <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
-          ))}
+          </motion.div>
+
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {services.map((service, i) => {
+              const Icon = icons[i];
+              const isActive = active === service.id;
+              return (
+                <motion.button
+                  key={service.id}
+                  onClick={() => setActive(service.id)}
+                  className={cn(
+                    "stack-card p-4 text-left transition-all duration-300",
+                    isActive && "border-accent/40 bg-accent/5 ring-1 ring-accent/20"
+                  )}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                >
+                  <div className="flex items-start justify-between mb-2.5">
+                    <div
+                      className={cn(
+                        "w-9 h-9 rounded-lg flex items-center justify-center transition-colors",
+                        isActive ? "bg-accent/15 text-accent" : "bg-surface-raised text-text-muted"
+                      )}
+                    >
+                      <Icon size={17} />
+                    </div>
+                    <span className="text-[10px] text-text-muted font-medium">{service.number}</span>
+                  </div>
+                  <h4
+                    className={cn(
+                      "text-sm font-semibold leading-snug transition-colors",
+                      isActive ? "text-accent" : "text-text-primary"
+                    )}
+                  >
+                    {service.title}
+                  </h4>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "Services", href: "/#services" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Team", href: "/founders" },
+  { label: "Stack", href: "/#stack" },
   { label: "Pricing", href: "/#pricing" },
+  { label: "Team", href: "/founders" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -18,79 +20,98 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
     <>
-      <nav className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled
-          ? "bg-ink/85 backdrop-blur-2xl border-b border-white/5"
-          : "bg-transparent"
-      )}>
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center relative"
-              style={{ background: "var(--signal)" }}>
-              <Zap size={14} className="text-ink" fill="currentColor" />
-              <span className="absolute inset-0 rounded-lg animate-ping opacity-25"
-                style={{ background: "var(--signal)" }} />
-            </div>
-            <span className="font-display text-lg tracking-tight">
-              InsightFlow<span style={{ color: "var(--signal)" }}>AI</span>
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-3">
+        <nav
+          className={cn(
+            "max-w-6xl mx-auto flex items-center justify-between h-12 px-4 sm:px-5 rounded-xl transition-all duration-300",
+            scrolled
+              ? "glass-panel shadow-lg shadow-black/20"
+              : "bg-transparent border border-transparent"
+          )}
+        >
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+            <Image
+              src="/logo1.png"
+              alt="Novanex AI"
+              width={26}
+              height={26}
+              className="w-[26px] h-[26px] object-contain rounded"
+            />
+            <span className="text-base font-semibold text-text-primary group-hover:text-accent transition-colors">
+              Novanex
             </span>
           </Link>
 
-          {/* Desktop */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}
-                className="text-text-secondary hover:text-text-primary text-sm transition-colors duration-200 relative group"
-                style={{ fontFamily: "var(--font-body)", fontWeight: 500 }}>
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-3.5 py-1.5 text-sm text-text-secondary hover:text-text-primary rounded-lg hover:bg-surface-raised/60 transition-all duration-200"
+              >
                 {link.label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
-                  style={{ background: "var(--signal)" }} />
               </Link>
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="/founders"
-              className="btn-outline px-4 py-2 rounded-lg text-xs"
-              style={{ borderColor: "rgba(139,111,255,0.35)", color: "var(--plasma)" }}>
-              Meet The Team
-            </Link>
-            <Link href="/#contact"
-              className="btn-signal px-5 py-2 rounded-lg text-sm">
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/#contact"
+              className="btn-primary flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm"
+            >
               Get Started
+              <ArrowUpRight size={14} />
             </Link>
           </div>
 
-          <button className="md:hidden text-text-secondary hover:text-text-primary transition-colors"
-            onClick={() => setOpen(!open)}>
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </nav>
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
+            <button
+              className="w-8 h-8 flex items-center justify-center rounded-lg border border-border-subtle text-text-secondary hover:text-text-primary transition-colors"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={17} /> : <Menu size={17} />}
+            </button>
+          </div>
+        </nav>
+      </header>
 
-      {/* Mobile menu */}
-      <div className={cn(
-        "fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden",
-        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      )} style={{ background: "rgba(5,5,8,0.97)", backdropFilter: "blur(24px)" }}>
-        {navLinks.map((link, i) => (
-          <Link key={link.href} href={link.href} onClick={() => setOpen(false)}
-            className="font-display text-3xl text-text-secondary hover:text-signal transition-colors duration-200"
-            style={{ transitionDelay: `${i * 60}ms` }}>
+      <div
+        className={cn(
+          "fixed inset-0 z-40 flex flex-col items-center justify-center gap-5 transition-all duration-300 md:hidden",
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}
+        style={{ background: "var(--void)" }}
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={() => setOpen(false)}
+            className="text-2xl font-semibold text-text-secondary hover:text-accent transition-colors"
+          >
             {link.label}
           </Link>
         ))}
-        <Link href="/#contact" onClick={() => setOpen(false)}
-          className="btn-signal px-8 py-3 rounded-xl mt-4">
+        <Link
+          href="/#contact"
+          onClick={() => setOpen(false)}
+          className="btn-primary px-7 py-2.5 rounded-lg text-sm mt-3"
+        >
           Get Started
         </Link>
       </div>

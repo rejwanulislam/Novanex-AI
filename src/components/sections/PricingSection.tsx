@@ -1,136 +1,99 @@
 "use client";
 
-import { Check, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { pricingPlans } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Link from "next/link";
 
 export default function PricingSection() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
   return (
-    <section id="pricing" className="py-28 relative" ref={ref}>
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 opacity-10 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(0,255,178,0.5) 0%, transparent 70%)",
-        }}
-      />
+    <section id="pricing" className="section-pad relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 bg-ink-light" />
+      <div className="absolute inset-0 grid-bg opacity-20" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <div
-          className={cn(
-            "text-center mb-16 transition-all duration-700",
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-6 h-px bg-signal" />
-            <span className="font-mono text-xs text-signal uppercase tracking-widest">
-              Investment
-            </span>
-            <div className="w-6 h-px bg-signal" />
-          </div>
-          <h2 className="font-display font-800 text-4xl md:text-5xl text-text-primary mb-4">
-            Transparent Pricing.
-            <br />
-            <span className="gradient-text-signal">No Surprises.</span>
-          </h2>
-          <p className="text-text-secondary max-w-xl mx-auto">
-            Every engagement is scoped precisely to your needs. We build what matters,
-            when it matters.
-          </p>
-        </div>
+      <div className="section-container relative z-10">
+        <SectionHeader
+          label="Pricing"
+          title={
+            <>
+              Transparent plans for{" "}
+              <span className="gradient-text-accent">every stage</span>
+            </>
+          }
+          description="Fixed-scope project pricing with no hidden fees. Pick a tier that matches your operational needs — or talk to us for something custom."
+          align="center"
+        />
 
-        {/* Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
           {pricingPlans.map((plan, i) => (
-            <div
+            <motion.div
               key={plan.id}
               className={cn(
-                "relative rounded-2xl p-8 transition-all duration-700",
-                plan.popular
-                  ? "border border-signal/30 bg-signal/5"
-                  : "border border-white/8 bg-ink-light",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                "stack-card p-7 md:p-8 flex flex-col relative",
+                plan.popular && "border-accent/40 ring-1 ring-accent/20 md:-translate-y-2"
               )}
-              style={{ transitionDelay: `${i * 100}ms` }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
-              {/* Top glow for popular */}
               {plan.popular && (
-                <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-signal to-transparent" />
-              )}
-
-              {/* Popular badge */}
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-signal text-ink px-3 py-1 rounded-full text-xs font-display font-700 uppercase tracking-wider whitespace-nowrap">
-                  <Zap size={10} fill="currentColor" />
-                  Most Popular
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-accent text-white">
+                    <Sparkles size={10} />
+                    Most Popular
+                  </span>
                 </div>
               )}
 
-              {/* Plan name */}
-              <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
-                {plan.name}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold text-text-primary mb-1">{plan.name}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{plan.description}</p>
               </div>
 
-              {/* Price */}
-              <div className="flex items-baseline gap-1 mb-2">
-                <span
-                  className={cn(
-                    "font-display font-800 text-4xl",
-                    plan.popular ? "text-signal" : "text-text-primary"
-                  )}
-                >
-                  {plan.price}
-                </span>
-                <span className="text-text-muted text-sm">{plan.period}</span>
+              <div className="mb-6 pb-6 border-b border-border-subtle">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-text-primary tracking-tight">
+                    {plan.price}
+                  </span>
+                  <span className="text-text-muted text-sm">{plan.period}</span>
+                </div>
               </div>
 
-              {/* Description */}
-              <p className="text-text-secondary text-sm mb-6 leading-relaxed">
-                {plan.description}
-              </p>
-
-              <div className="divider mb-6" />
-
-              {/* Features */}
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 flex-grow mb-8">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                    <Check
-                      size={14}
-                      className={cn(
-                        "flex-shrink-0 mt-0.5",
-                        plan.popular ? "text-signal" : "text-signal/60"
-                      )}
-                    />
+                    <Check size={15} className="text-accent flex-shrink-0 mt-0.5" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              {/* CTA */}
-              <a
+              <Link
                 href="#contact"
                 className={cn(
-                  "w-full block text-center py-3 rounded-xl text-sm font-display font-700 uppercase tracking-wider transition-all duration-300",
-                  plan.popular
-                    ? "btn-signal"
-                    : "btn-outline"
+                  "w-full text-center py-3 rounded-lg text-sm font-semibold transition-all",
+                  plan.popular ? "btn-primary" : "btn-ghost"
                 )}
               >
                 {plan.cta}
-              </a>
-            </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
 
-        {/* Note */}
-        <p className="text-center text-text-muted text-xs font-mono mt-8">
-          All prices in USD. Custom scoping available for enterprise projects.
-        </p>
+        <motion.p
+          className="text-center text-text-muted text-sm mt-10"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          All plans include source code handoff, documentation, and a zero data training guarantee.
+        </motion.p>
       </div>
     </section>
   );
